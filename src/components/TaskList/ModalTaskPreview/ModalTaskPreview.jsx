@@ -1,63 +1,102 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import T from 'prop-types';
 import Button from '@material-ui/core/Button';
-import Modal from 'react-modal';
+import { Portal } from 'react-portal';
 
-const customStyles = {
+const styles = {
+  root: {
+    position: 'fixed',
+    top: '0px',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
+    backgroundColor: 'rgba(255, 255, 255, 0.75)',
+  },
   content: {
+    position: 'absolute',
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
+    border: '1px solid rgb(204, 204, 204)',
+    background: 'rgb(255, 255, 255)',
+    overflow: 'auto',
+    borderRadius: '4px',
+    outline: 'none',
+    padding: '20px',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    width: '320px',
   },
 };
 
-Modal.setAppElement(document.getElementById('root'));
+class ModalTaskPreview extends Component {
+  constructor(props) {
+    super(props);
 
-const ModalTaskPreview = (props) => {
-  const {
-    formStates, handleAddTask, handleClosePreviewTask, modalTaskIsOpen
-  } = props;
+    this.myRef = React.createRef();
 
-  const formValues = formStates || {};
+    this.readContent = this.readContent.bind(this);
+  }
 
-  return (
-    <Modal
-      isOpen={modalTaskIsOpen}
-      // onAfterOpen={this.afterOpenModal}
-      onRequestClose={handleClosePreviewTask}
-      style={customStyles}
-      contentLabel="Preview task mode"
-    >
-      <h2 ref={subtitle => this.subtitle = subtitle}>Preview task mode</h2>
-      <div>I am a modal</div>
-      <div>
-        {'User name: '}
-        {formValues.username || ''}
-      </div>
-      <div>
-        {'User email: '}
-        {formValues.email || ''}
-      </div>
-      <div>
-        {'Task description: '}
-        {formValues.text || ''}
-      </div>
-      <Button onClick={handleAddTask} color="primary">
-        Add task
-      </Button>
-      <Button onClick={handleClosePreviewTask} color="primary">
-        Close Modal
-      </Button>
-    </Modal>
-  );
-};
+  componentDidMount() {
+    const { formStates: { image } } = this.props;
+
+    if (image) this.readContent(image);
+  }
+
+  readContent(image) {
+    const fr = new FileReader();
+
+    fr.onload = () => {
+      this.myRef.current.src = fr.result;
+    };
+
+    fr.readAsDataURL(image);
+  }
+
+  render() {
+    const {
+      formStates: { username, email, text }, handleAddTask, handleClosePreviewTask, classes,
+    } = this.props;
+
+    return (
+      <Portal>
+        <div className={classes.root}>
+          <div className={classes.content}>
+            <div>
+              {'User name: '}
+              {username}
+            </div>
+            <div>
+              {'User email: '}
+              {email}
+            </div>
+            <div>
+              {'Task description: '}
+              {text}
+            </div>
+            <img ref={this.myRef} width="320" height="240" alt="" />
+            <div>
+              <Button onClick={handleAddTask} color="primary">
+                Add task
+              </Button>
+              <Button onClick={handleClosePreviewTask} color="primary">
+                Close Modal
+              </Button>
+            </div>
+          </div>
+
+        </div>
+      </Portal>
+    );
+  }
+}
 
 // ModalTaskPreview.propTypes = {
 //   taskList: T.arrayOf(T.any).isRequired,
 //   classes: T.objectOf(T.any).isRequired,
 // };
 
-export default ModalTaskPreview;
+export default withStyles(styles)(ModalTaskPreview);

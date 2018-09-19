@@ -17,6 +17,9 @@ const styles = {
     justifyContent: 'space-around',
     flexWrap: 'wrap',
   },
+  pagination: {
+    alignSelf: 'center',
+  },
 };
 
 class TaskList extends Component {
@@ -32,20 +35,18 @@ class TaskList extends Component {
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleOpenPreviewTask = this.handleOpenPreviewTask.bind(this);
     this.handleClosePreviewTask = this.handleClosePreviewTask.bind(this);
-    this.handleSubmitForm = this.handleSubmitForm.bind(this);
+    // this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
 
   handleChangePage(page) {
-    console.log(page)
-
-    const { changePage, dispatch } = this.props;
+    const { changePage } = this.props;
 
     changePage(page);
   }
 
-  handleSubmitForm(values) {
-    console.log('handleSubmitForm', values);
-  }
+  // handleSubmitForm(values) {
+  //   console.log('handleSubmitForm', values);
+  // }
 
   handleAddTask() {
     const { addTask, dispatch, formStates } = this.props;
@@ -54,13 +55,13 @@ class TaskList extends Component {
 
     this.handleClosePreviewTask();
 
-    addTask(formStates);
+    // addTask(formStates);
 
-    dispatch(reset('addtask'));
+    dispatch(reset('addTask'));
   }
 
   handleOpenPreviewTask() {
-    const { addTask, dispatch, formStates } = this.props;
+    const { formStates } = this.props;
 
     console.log('handleOpenPreviewTask', formStates);
 
@@ -68,7 +69,7 @@ class TaskList extends Component {
   }
 
   handleClosePreviewTask() {
-    const { addTask, dispatch, formStates } = this.props;
+    const { formStates } = this.props;
 
     console.log('handleClosePreviewTask', formStates);
 
@@ -76,7 +77,6 @@ class TaskList extends Component {
   }
 
   handleChangeSortBy(event) {
-    console.log(event.target.value)
     const { changeSortField } = this.props;
 
     changeSortField(event.target.value);
@@ -86,6 +86,8 @@ class TaskList extends Component {
     const {
       taskList, totalTaskCount, currentPage, classes, ...othersProps
     } = this.props;
+
+    const { modalTaskIsOpen } = this.state;
 
     return (
       <React.Fragment>
@@ -97,15 +99,18 @@ class TaskList extends Component {
           {...othersProps}
         />
 
-        <ModalTaskPreview
-          {...this.props}
-          {...this.state}
-          handleAddTask={this.handleAddTask}
-          handleClosePreviewTask={this.handleClosePreviewTask}
-        />
+        {modalTaskIsOpen
+          && (
+            <ModalTaskPreview
+              {...this.props}
+              handleAddTask={this.handleAddTask}
+              handleClosePreviewTask={this.handleClosePreviewTask}
+            />
+          )
+        }
 
         <Sorting
-          {...this.props}
+          {...othersProps}
           handleChangeSortBy={this.handleChangeSortBy}
         />
 
@@ -122,13 +127,16 @@ class TaskList extends Component {
           }
         </div>
 
-        <Pagination
-          onChange={this.handleChangePage}
-          current={currentPage}
-          total={totalTaskCount}
-          defaultPageSize={3}
-          locale={localeInfo}
-        />
+        <div className={classes.pagination}>
+          <Pagination
+            onChange={this.handleChangePage}
+            current={currentPage}
+            total={totalTaskCount}
+            defaultPageSize={3}
+            locale={localeInfo}
+          />
+        </div>
+
       </React.Fragment>
     );
   }

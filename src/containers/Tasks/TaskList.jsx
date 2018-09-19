@@ -6,7 +6,13 @@ import { getFormValues } from 'redux-form';
 
 import TaskList from '../../components/TaskList/TaskList';
 import Loading from '../../components/Loading/Loading';
-import { getTaskList, addTask, changeSortField, changePage, updateTask } from '../../store/tasks/actions';
+import {
+  getTaskList,
+  addTask,
+  changeSortField,
+  changePage,
+  updateTask,
+} from '../../store/tasks/actions';
 
 class TaskListContainer extends Component {
   constructor(props) {
@@ -14,7 +20,9 @@ class TaskListContainer extends Component {
 
     const { dispatch } = props;
 
-    this.boundActionCreators = bindActionCreators({ addTask, changeSortField, changePage, updateTask }, dispatch);
+    this.boundActionCreators = bindActionCreators({
+      addTask, changeSortField, changePage, updateTask,
+    }, dispatch);
   }
 
   componentDidMount() {
@@ -25,7 +33,6 @@ class TaskListContainer extends Component {
 
   render() {
     const { isRequest } = this.props;
-    console.log(this.props)
 
     return (
       <React.Fragment>

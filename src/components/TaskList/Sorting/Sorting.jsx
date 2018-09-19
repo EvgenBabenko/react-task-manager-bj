@@ -6,10 +6,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+const styles = {
+  root: {
+    alignSelf: 'center',
+  },
+};
 
 const Sorting = (props) => {
   const {
-    handleChangeSortBy, sortBy,
+    handleChangeSortBy, sortBy, classes,
   } = props;
 
   const mapSortFields = [
@@ -20,7 +25,7 @@ const Sorting = (props) => {
   ];
 
   return (
-    <div>
+    <div className={classes.root}>
       {'Sort by '}
       <form autoComplete="off">
         <FormControl>
@@ -48,4 +53,4 @@ const Sorting = (props) => {
 //   classes: T.objectOf(T.any).isRequired,
 // };
 
-export default Sorting;
+export default withStyles(styles)(Sorting);

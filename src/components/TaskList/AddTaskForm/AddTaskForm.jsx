@@ -14,8 +14,10 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    width: '90%',
+    alignSelf: 'center',
   },
-  button: {
+  alignedItem: {
     alignSelf: 'flex-start',
   },
 };
@@ -23,14 +25,14 @@ const styles = {
 const renderTextField = ({
   input, label, meta: { touched, error }, ...custom
 }) => (
-    <TextField
-      hintText={label}
-      floatingLabelText={label}
-      errorText={touched && error}
-      {...input}
-      {...custom}
-    />
-  );
+  <TextField
+    hintText={label}
+    floatingLabelText={label}
+    errorText={touched && error}
+    {...input}
+    {...custom}
+  />
+);
 
 const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
 
@@ -52,7 +54,7 @@ const FileInput = ({
 
 const AddTaskForm = (props) => {
   const {
-    handleSubmit, pristine, submitting, classes, handleAddTask, handleOpenPreviewTask
+    handleSubmit, pristine, submitting, classes, handleAddTask, handleOpenPreviewTask,
   } = props;
 
   return (
@@ -61,11 +63,11 @@ const AddTaskForm = (props) => {
         <Field name="username" component={renderTextField} label="User name" fullWidth />
         <Field name="email" component={renderTextField} label="Email" fullWidth />
         <Field name="text" component={renderTextField} label="Task description" multiLine rows={2} fullWidth />
-        <Field name="image" component={FileInput} type="file" accept="image/*" />
-        <Button onClick={handleAddTask} color="primary" disabled={pristine || submitting} className={classes.button}>
+        <Field name="image" component={FileInput} type="file" accept="image/*" className={classes.alignedItem} />
+        <Button onClick={handleAddTask} color="primary" disabled={pristine || submitting} className={classes.alignedItem}>
           Add a task
         </Button>
-        <Button onClick={handleOpenPreviewTask} color="primary" disabled={pristine || submitting} className={classes.button}>
+        <Button onClick={handleOpenPreviewTask} color="primary" disabled={pristine || submitting} className={classes.alignedItem}>
           Preview mode
         </Button>
       </form>
