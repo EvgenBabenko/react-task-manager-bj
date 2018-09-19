@@ -20,9 +20,8 @@ const styles = {
     alignSelf: 'flex-start',
   },
   card: {
-    width: '92%',
-    padding: '20px',
-    margin: '20px',
+    width: '300px',
+    margin: '10px',
   },
 };
 
@@ -47,8 +46,8 @@ const EditTaskForm = (props) => {
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <form onSubmit={handleSubmit} className={classes.root}>
         <Card className={classes.card}>
-          <Field name="text" component={renderTextField} label="Task description" fullWidth />
-          <Field name="status" parse={value => Number(value)} component={renderTextField} label="Task status" multiLine rows={2} fullWidth />
+          <Field name="text" component={renderTextField} label="Task description" fullWidth multiLine rows={2} />
+          <Field name="status" parse={value => Number(value)} component={renderTextField} label="Task status" fullWidth />
           <div className={classes.button}>
             <Button color="primary" type="submit" disabled={pristine || submitting} autoFocus>
               Edit the task
@@ -69,12 +68,6 @@ EditTaskForm.propTypes = {
   pristine: T.bool.isRequired,
   submitting: T.bool.isRequired,
   classes: T.objectOf(T.any).isRequired,
-};
-
-renderTextField.propTypes = {
-  input: T.objectOf(T.any).isRequired,
-  label: T.string.isRequired,
-  meta: T.objectOf(T.any).isRequired,
 };
 
 const EditTaskFormWrapper = reduxForm({

@@ -21,8 +21,6 @@ class LoginContainer extends Component {
   }
 
   submit(values) {
-
-    console.log(values)
     const { dispatch } = this.props;
 
     dispatch(login(values));
@@ -32,8 +30,6 @@ class LoginContainer extends Component {
     return (
       <AuthForm
         onSubmit={this.submit}
-        title="Login"
-        titleButton="Login"
         {...this.props}
         {...this.boundActionCreators}
       />
@@ -41,13 +37,13 @@ class LoginContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  // isLocalStorage: state.user.tokenStorage.isLocalStorage,
-  // notifyMessage: state.common.notifyMessage,
-});
+// const mapStateToProps = state => ({
+//   // isLocalStorage: state.user.tokenStorage.isLocalStorage,
+//   // notifyMessage: state.common.notifyMessage,
+// });
 
 LoginContainer.propTypes = {
   dispatch: T.func.isRequired,
 };
 
-export default connect(mapStateToProps)(LoginContainer);
+export default connect(null)(LoginContainer);

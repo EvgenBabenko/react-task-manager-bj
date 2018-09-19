@@ -6,51 +6,82 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+
 const styles = {
   root: {
     alignSelf: 'center',
+    display: 'flex',
+    alignItems: 'baseline',
   },
 };
 
 const Sorting = (props) => {
   const {
-    handleChangeSortBy, sortBy, classes,
+    handleChangeSortByField, handleChangeSortDirection, sortByField, sortDirection, classes,
   } = props;
 
-  const mapSortFields = [
+  const mapSortByField = [
     'id',
     'username',
     'email',
     'status',
   ];
 
+  const mapSortDirection = [
+    'asc',
+    'desc',
+  ];
+
   return (
     <div className={classes.root}>
-      {'Sort by '}
-      <form autoComplete="off">
+      <p>Sort by:</p>
+      <div>
         <FormControl>
           <InputLabel>
             field
           </InputLabel>
           <Select
-            value={sortBy}
-            onChange={handleChangeSortBy}
+            value={sortByField}
+            onChange={handleChangeSortByField}
           >
-            {mapSortFields.map(field => (
+            {mapSortByField.map(field => (
               <MenuItem key={field} value={field}>
                 {field}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-      </form>
+      </div>
+
+      <p>Sort :</p>
+      <div>
+        <FormControl>
+          <InputLabel>
+            direction
+          </InputLabel>
+          <Select
+            value={sortDirection}
+            onChange={handleChangeSortDirection}
+          >
+            {mapSortDirection.map(field => (
+              <MenuItem key={field} value={field}>
+                {field}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+
     </div>
   );
 };
 
-// Sorting.propTypes = {
-//   taskList: T.arrayOf(T.any).isRequired,
-//   classes: T.objectOf(T.any).isRequired,
-// };
+Sorting.propTypes = {
+  classes: T.objectOf(T.any).isRequired,
+  handleChangeSortByField: T.func.isRequired,
+  handleChangeSortDirection: T.func.isRequired,
+  sortByField: T.string.isRequired,
+  sortDirection: T.string.isRequired,
+};
 
 export default withStyles(styles)(Sorting);

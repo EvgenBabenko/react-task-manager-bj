@@ -12,6 +12,7 @@ import {
   changeSortField,
   changePage,
   updateTask,
+  changeSortDirection,
 } from '../../store/tasks/actions';
 
 class TaskListContainer extends Component {
@@ -21,7 +22,7 @@ class TaskListContainer extends Component {
     const { dispatch } = props;
 
     this.boundActionCreators = bindActionCreators({
-      addTask, changeSortField, changePage, updateTask,
+      addTask, changeSortField, changeSortDirection, changePage, updateTask,
     }, dispatch);
   }
 
@@ -48,7 +49,8 @@ class TaskListContainer extends Component {
 const mapStateToProps = state => ({
   isRequest: state.tasks.isRequest,
   taskList: state.tasks.taskList,
-  sortBy: state.tasks.sortBy,
+  sortByField: state.tasks.sortByField,
+  sortDirection: state.tasks.sortDirection,
   currentPage: state.tasks.currentPage,
   totalTaskCount: state.tasks.totalTaskCount,
   isAdmin: state.users.isAdmin,

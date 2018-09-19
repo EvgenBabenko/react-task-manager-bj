@@ -83,7 +83,7 @@ class ModalTaskPreview extends Component {
                 Add task
               </Button>
               <Button onClick={handleClosePreviewTask} color="primary">
-                Close Modal
+                Close
               </Button>
             </div>
           </div>
@@ -94,9 +94,11 @@ class ModalTaskPreview extends Component {
   }
 }
 
-// ModalTaskPreview.propTypes = {
-//   taskList: T.arrayOf(T.any).isRequired,
-//   classes: T.objectOf(T.any).isRequired,
-// };
+ModalTaskPreview.propTypes = {
+  classes: T.objectOf(T.any).isRequired,
+  formStates: T.objectOf(T.any).isRequired,
+  handleAddTask: T.func.isRequired,
+  handleClosePreviewTask: T.func.isRequired,
+};
 
 export default withStyles(styles)(ModalTaskPreview);

@@ -1,10 +1,9 @@
 export default image => new Promise((resolve, reject) => {
   const img = new Image();
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
 
-  img.onload = function () {
-    // debugger
+  img.onload = () => {
     var MAX_WIDTH = 320;
     var MAX_HEIGHT = 240;
     var width = img.width;
@@ -25,10 +24,9 @@ export default image => new Promise((resolve, reject) => {
     canvas.width = width;
     canvas.height = height;
 
-    // ctx.drawImage(img, 0, 0, width, height, 0, 0, width, height);
     ctx.drawImage(img, 0, 0, width, height);
 
-    resolve(canvas.toDataURL("image/jpeg"));
+    resolve(canvas.toDataURL('image/jpeg'));
   };
 
   img.src = URL.createObjectURL(image);

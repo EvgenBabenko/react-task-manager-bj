@@ -31,11 +31,11 @@ class TaskList extends Component {
     };
 
     this.handleAddTask = this.handleAddTask.bind(this);
-    this.handleChangeSortBy = this.handleChangeSortBy.bind(this);
+    this.handleChangeSortByField = this.handleChangeSortByField.bind(this);
+    this.handleChangeSortDirection = this.handleChangeSortDirection.bind(this);
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleOpenPreviewTask = this.handleOpenPreviewTask.bind(this);
     this.handleClosePreviewTask = this.handleClosePreviewTask.bind(this);
-    // this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
 
   handleChangePage(page) {
@@ -44,42 +44,34 @@ class TaskList extends Component {
     changePage(page);
   }
 
-  // handleSubmitForm(values) {
-  //   console.log('handleSubmitForm', values);
-  // }
-
   handleAddTask() {
     const { addTask, dispatch, formStates } = this.props;
 
-    console.log('handleAddTask', formStates);
-
     this.handleClosePreviewTask();
 
-    // addTask(formStates);
+    addTask(formStates);
 
     dispatch(reset('addTask'));
   }
 
   handleOpenPreviewTask() {
-    const { formStates } = this.props;
-
-    console.log('handleOpenPreviewTask', formStates);
-
     this.setState({ modalTaskIsOpen: true });
   }
 
   handleClosePreviewTask() {
-    const { formStates } = this.props;
-
-    console.log('handleClosePreviewTask', formStates);
-
     this.setState({ modalTaskIsOpen: false });
   }
 
-  handleChangeSortBy(event) {
+  handleChangeSortByField(event) {
     const { changeSortField } = this.props;
 
     changeSortField(event.target.value);
+  }
+
+  handleChangeSortDirection(event) {
+    const { changeSortDirection } = this.props;
+
+    changeSortDirection(event.target.value);
   }
 
   render() {
@@ -102,7 +94,7 @@ class TaskList extends Component {
         {modalTaskIsOpen
           && (
             <ModalTaskPreview
-              {...this.props}
+              {...othersProps}
               handleAddTask={this.handleAddTask}
               handleClosePreviewTask={this.handleClosePreviewTask}
             />
@@ -111,7 +103,8 @@ class TaskList extends Component {
 
         <Sorting
           {...othersProps}
-          handleChangeSortBy={this.handleChangeSortBy}
+          handleChangeSortByField={this.handleChangeSortByField}
+          handleChangeSortDirection={this.handleChangeSortDirection}
         />
 
         <div className={classes.root}>

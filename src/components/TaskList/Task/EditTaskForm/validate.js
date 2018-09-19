@@ -11,7 +11,5 @@ export default function (values) {
     }
   });
 
-  // if (values.title && values.title.length > 50) errors.title = 'Task title too long, max 50 letters';
-
   return errors;
 }

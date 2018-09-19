@@ -37,7 +37,9 @@ const renderTextField = ({
 const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
 
 const FileInput = ({
-  input: { value: omitValue, onChange, onBlur, ...inputProps },
+  input: {
+    value: omitValue, onChange, onBlur, ...inputProps
+  },
   meta: omitMeta,
   ...props
 }) => {
@@ -80,13 +82,15 @@ AddTaskForm.propTypes = {
   pristine: T.bool.isRequired,
   submitting: T.bool.isRequired,
   classes: T.objectOf(T.any).isRequired,
+  handleAddTask: T.func.isRequired,
+  handleOpenPreviewTask: T.func.isRequired,
 };
 
-renderTextField.propTypes = {
-  input: T.objectOf(T.any).isRequired,
-  label: T.string.isRequired,
-  meta: T.objectOf(T.any).isRequired,
-};
+// renderTextField.propTypes = {
+//   input: T.objectOf(T.any).isRequired,
+//   label: T.string.isRequired,
+//   meta: T.objectOf(T.any).isRequired,
+// };
 
 const AddTaskFormWrapper = reduxForm({
   form: 'addTask',
