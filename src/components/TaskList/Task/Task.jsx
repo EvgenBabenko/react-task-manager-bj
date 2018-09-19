@@ -33,12 +33,12 @@ class Task extends Component {
   }
 
   handleTaskUpdate(values) {
-    console.log(123,this.props)
+    console.log(123,values)
     const { updateTask, id } = this.props;
 
-    this.handleCloseEditTask();
-
     updateTask(id, values);
+
+    this.handleCloseEditTask();
   }
 
   handleOpenEditTask() {
@@ -53,6 +53,7 @@ class Task extends Component {
   render() {
     const { username, email, text, image_path, status, isAdmin } = this.props;
     const { isEditTask } = this.state;
+    console.log(status)
 
     return (
       <React.Fragment>
@@ -80,7 +81,7 @@ class Task extends Component {
               {isAdmin
                 && (
                   <Button type="submit" onClick={this.handleOpenEditTask} color="primary">
-                    Preview mode
+                    Edit a task
                   </Button>
                 )
               }

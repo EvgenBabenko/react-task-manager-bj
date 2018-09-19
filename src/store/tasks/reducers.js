@@ -4,7 +4,7 @@ import createReducers from '../../helpers/createReducers';
 const initialState = {
   isRequest: false,
   taskList: [],
-  sortBy: '',
+  sortBy: 'id',
   currentPage: 1,
   totalTaskCount: null,
   error: null,

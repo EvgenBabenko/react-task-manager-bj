@@ -2,7 +2,10 @@ export default function (values) {
   const errors = {};
 
   const requiredFields = [
-    'title',
+    'username',
+    'email',
+    'text',
+    'image',
   ];
 
   requiredFields.forEach((field) => {
@@ -11,7 +14,7 @@ export default function (values) {
     }
   });
 
-  if (values.title && values.title.length > 50) errors.title = 'Task title too long, max 50 letters';
+  if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) errors.email = 'Invalid email address';
 
   return errors;
 }

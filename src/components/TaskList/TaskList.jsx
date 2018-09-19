@@ -2,18 +2,14 @@ import React, { Component } from 'react';
 import { reset } from 'redux-form';
 import T from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-// import List from '@material-ui/core/List';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Pagination from 'rc-pagination';
 import localeInfo from 'rc-pagination/lib/locale/en_US';
 import 'rc-pagination/assets/index.css';
 
 import Task from './Task/Task';
 import AddTaskForm from './AddTaskForm/AddTaskForm';
-// import Loading from '../Loading/Loading';
+import ModalTaskPreview from './ModalTaskPreview/ModalTaskPreview';
+import Sorting from './Sorting/Sorting';
 
 const styles = {
   root: {
@@ -28,13 +24,14 @@ class TaskList extends Component {
     super(props);
 
     this.state = {
-      addTaskForm: null,
+      modalTaskIsOpen: false,
     };
 
     this.handleAddTask = this.handleAddTask.bind(this);
     this.handleChangeSortBy = this.handleChangeSortBy.bind(this);
     this.handleChangePage = this.handleChangePage.bind(this);
-    this.handlePreviewTask = this.handlePreviewTask.bind(this);
+    this.handleOpenPreviewTask = this.handleOpenPreviewTask.bind(this);
+    this.handleClosePreviewTask = this.handleClosePreviewTask.bind(this);
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
   }
 
@@ -47,32 +44,35 @@ class TaskList extends Component {
   }
 
   handleSubmitForm(values) {
-    console.log(values, 1);
-
-    this.setState({ addTaskForm: values });
+    console.log('handleSubmitForm', values);
   }
 
-  handleAddTask(values) {
-    // const values = this.state.addTaskForm;
+  handleAddTask() {
+    const { addTask, dispatch, formStates } = this.props;
 
-    const { addTask, dispatch } = this.props;
+    console.log('handleAddTask', formStates);
 
-    console.log(values, 2);
+    this.handleClosePreviewTask();
 
-    addTask(values);
+    addTask(formStates);
 
     dispatch(reset('addtask'));
   }
 
-  handlePreviewTask() {
-    const values = this.state.addTaskForm;
-    const { addTask, dispatch } = this.props;
+  handleOpenPreviewTask() {
+    const { addTask, dispatch, formStates } = this.props;
 
-    console.log(values, 3);
+    console.log('handleOpenPreviewTask', formStates);
 
-    // addTask(values);
+    this.setState({ modalTaskIsOpen: true });
+  }
 
-    // dispatch(reset('addtask'));
+  handleClosePreviewTask() {
+    const { addTask, dispatch, formStates } = this.props;
+
+    console.log('handleClosePreviewTask', formStates);
+
+    this.setState({ modalTaskIsOpen: false });
   }
 
   handleChangeSortBy(event) {
@@ -84,40 +84,30 @@ class TaskList extends Component {
 
   render() {
     const {
-      taskList, totalTaskCount, currentPage, sortBy, classes, ...othersProps
+      taskList, totalTaskCount, currentPage, classes, ...othersProps
     } = this.props;
-
-    const mapStatuses = [
-      'username',
-      'email',
-      'status',
-    ];
 
     return (
       <React.Fragment>
-        <AddTaskForm onSubmit={this.handleAddTask} handlePreviewTask={this.handlePreviewTask} handleAddTask={this.handleAddTask} {...othersProps} />
+        <AddTaskForm
+          onSubmit={this.handleSubmitForm}
+          handleOpenPreviewTask={this.handleOpenPreviewTask}
+          handleClosePreviewTask={this.handleClosePreviewTask}
+          handleAddTask={this.handleAddTask}
+          {...othersProps}
+        />
 
-        <div>
-          {'Sort by '}
-          <form autoComplete="off">
-            <FormControl>
-              <InputLabel>
-                field
-              </InputLabel>
-              <Select
-                value={sortBy}
-                onChange={this.handleChangeSortBy}
-              >
-                {mapStatuses.map(item => (
-                  <MenuItem key={item} value={item}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </form>
-        </div>
+        <ModalTaskPreview
+          {...this.props}
+          {...this.state}
+          handleAddTask={this.handleAddTask}
+          handleClosePreviewTask={this.handleClosePreviewTask}
+        />
 
+        <Sorting
+          {...this.props}
+          handleChangeSortBy={this.handleChangeSortBy}
+        />
 
         <div className={classes.root}>
           {taskList.length

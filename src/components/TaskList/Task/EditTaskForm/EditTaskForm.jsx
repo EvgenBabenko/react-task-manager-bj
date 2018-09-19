@@ -48,7 +48,7 @@ const EditTaskForm = (props) => {
       <form onSubmit={handleSubmit} className={classes.root}>
         <Card className={classes.card}>
           <Field name="text" component={renderTextField} label="Task description" fullWidth />
-          <Field name="status" component={renderTextField} label="Task status" multiLine rows={2} fullWidth />
+          <Field name="status" parse={value => Number(value)} component={renderTextField} label="Task status" multiLine rows={2} fullWidth />
           <div className={classes.button}>
             <Button color="primary" type="submit" disabled={pristine || submitting} autoFocus>
               Edit the task

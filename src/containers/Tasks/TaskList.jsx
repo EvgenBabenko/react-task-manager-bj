@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import T from 'prop-types';
+import { getFormValues } from 'redux-form';
 
 import TaskList from '../../components/TaskList/TaskList';
 import Loading from '../../components/Loading/Loading';
@@ -24,6 +25,7 @@ class TaskListContainer extends Component {
 
   render() {
     const { isRequest } = this.props;
+    console.log(this.props)
 
     return (
       <React.Fragment>
@@ -43,6 +45,7 @@ const mapStateToProps = state => ({
   currentPage: state.tasks.currentPage,
   totalTaskCount: state.tasks.totalTaskCount,
   isAdmin: state.users.isAdmin,
+  formStates: getFormValues('addTask')(state),
 });
 
 TaskListContainer.propTypes = {

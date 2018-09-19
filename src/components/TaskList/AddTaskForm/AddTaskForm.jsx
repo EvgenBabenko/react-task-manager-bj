@@ -23,21 +23,21 @@ const styles = {
 const renderTextField = ({
   input, label, meta: { touched, error }, ...custom
 }) => (
-  <TextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-  />
-);
+    <TextField
+      hintText={label}
+      floatingLabelText={label}
+      errorText={touched && error}
+      {...input}
+      {...custom}
+    />
+  );
 
 const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
 
-const FileInput = ({ 
-  input: { value: omitValue, onChange, onBlur, ...inputProps }, 
-  meta: omitMeta, 
-  ...props 
+const FileInput = ({
+  input: { value: omitValue, onChange, onBlur, ...inputProps },
+  meta: omitMeta,
+  ...props
 }) => {
   return (
     <input
@@ -52,7 +52,7 @@ const FileInput = ({
 
 const AddTaskForm = (props) => {
   const {
-    handleSubmit, pristine, submitting, classes, handleAddTask, handlePreviewTask
+    handleSubmit, pristine, submitting, classes, handleAddTask, handleOpenPreviewTask
   } = props;
 
   return (
@@ -61,11 +61,11 @@ const AddTaskForm = (props) => {
         <Field name="username" component={renderTextField} label="User name" fullWidth />
         <Field name="email" component={renderTextField} label="Email" fullWidth />
         <Field name="text" component={renderTextField} label="Task description" multiLine rows={2} fullWidth />
-        <Field name="image" component={FileInput} type="file" />
-        <Button type="submit" color="primary" disabled={pristine || submitting} className={classes.button}>
+        <Field name="image" component={FileInput} type="file" accept="image/*" />
+        <Button onClick={handleAddTask} color="primary" disabled={pristine || submitting} className={classes.button}>
           Add a task
         </Button>
-        <Button type="submit" onClick={handlePreviewTask} color="primary" disabled={pristine || submitting} className={classes.button}>
+        <Button onClick={handleOpenPreviewTask} color="primary" disabled={pristine || submitting} className={classes.button}>
           Preview mode
         </Button>
       </form>
