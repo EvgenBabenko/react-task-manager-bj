@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
-import templates from './templateReducers';
+import tasks from './tasks/reducers';
+import users from './users/reducers';
 
 export default combineReducers({
-  templates,
+  tasks,
+  users,
+  form: formReducer,
 });
