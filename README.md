@@ -1,6 +1,6 @@
 # Task-manager
 
-### `You can see online that SPA` [here](https://evgenbabenko.github.io/react-task-manager-bj/)
+### `You can see online that SPA` [here](https://evgenbabenko.github.io/react-task-manager-bj/). `Open the link and click HOME button`
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
