@@ -6,10 +6,11 @@ import Pagination from 'rc-pagination';
 import localeInfo from 'rc-pagination/lib/locale/en_US';
 import 'rc-pagination/assets/index.css';
 
-import Task from './Task/Task';
 import AddTaskForm from './AddTaskForm/AddTaskForm';
-import ModalTaskPreview from './ModalTaskPreview/ModalTaskPreview';
 import Sorting from './Sorting/Sorting';
+import TaskList from './TaskList/TaskList';
+import ModalTaskPreview from './ModalTaskPreview/ModalTaskPreview';
+import NoItems from '../NoItems/NoItems';
 
 const styles = {
   root: {
@@ -22,7 +23,7 @@ const styles = {
   },
 };
 
-class TaskList extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
 
@@ -36,12 +37,6 @@ class TaskList extends Component {
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleOpenPreviewTask = this.handleOpenPreviewTask.bind(this);
     this.handleClosePreviewTask = this.handleClosePreviewTask.bind(this);
-  }
-
-  handleChangePage(page) {
-    const { changePage } = this.props;
-
-    changePage(page);
   }
 
   handleAddTask() {
@@ -74,6 +69,12 @@ class TaskList extends Component {
     changeSortDirection(event.target.value);
   }
 
+  handleChangePage(page) {
+    const { changePage } = this.props;
+
+    changePage(page);
+  }
+
   render() {
     const {
       taskList, totalTaskCount, currentPage, classes, ...othersProps
@@ -101,43 +102,38 @@ class TaskList extends Component {
           )
         }
 
-        <Sorting
-          {...othersProps}
-          handleChangeSortByField={this.handleChangeSortByField}
-          handleChangeSortDirection={this.handleChangeSortDirection}
-        />
-
-        <div className={classes.root}>
-          {taskList.length
-            ? taskList.map(task => (
-              <Task
-                key={task.id}
-                {...task}
+        {taskList.length
+          ? (
+            <React.Fragment>
+              <Sorting
                 {...othersProps}
+                handleChangeSortByField={this.handleChangeSortByField}
+                handleChangeSortDirection={this.handleChangeSortDirection}
               />
-            ))
-            : <p>no items</p>
-          }
-        </div>
 
-        <div className={classes.pagination}>
-          <Pagination
-            onChange={this.handleChangePage}
-            current={currentPage}
-            total={totalTaskCount}
-            defaultPageSize={3}
-            locale={localeInfo}
-          />
-        </div>
+              <TaskList {...{ ...othersProps, taskList }} />
 
+              <div className={classes.pagination}>
+                <Pagination
+                  onChange={this.handleChangePage}
+                  current={currentPage}
+                  total={totalTaskCount}
+                  defaultPageSize={3}
+                  locale={localeInfo}
+                />
+              </div>
+            </React.Fragment>
+          )
+          : <NoItems />
+        }
       </React.Fragment>
     );
   }
 }
 
-TaskList.propTypes = {
+Main.propTypes = {
   taskList: T.arrayOf(T.any).isRequired,
   classes: T.objectOf(T.any).isRequired,
 };
 
-export default withStyles(styles)(TaskList);
+export default withStyles(styles)(Main);

@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import history from '../../../helpers/history';
+import history from '../../../../helpers/history';
 
 const styles = {
   link: {

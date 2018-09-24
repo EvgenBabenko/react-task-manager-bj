@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import T from 'prop-types';
 
-import AuthButton from '../../components/Header/AuthButton/AuthButton';
-import { logout } from '../../store/users/actions';
+import AuthButton from '../components/Header/AuthButton/AuthButton';
+import { logout } from '../store/users/actions';
 
-class AuthContainer extends Component {
+class AuthButtonContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -26,8 +26,8 @@ const mapStateToProps = state => ({
   isLogin: state.users.isLogin,
 });
 
-AuthContainer.propTypes = {
+AuthButtonContainer.propTypes = {
   dispatch: T.func.isRequired,
 };
 
-export default connect(mapStateToProps)(AuthContainer);
+export default connect(mapStateToProps)(AuthButtonContainer);

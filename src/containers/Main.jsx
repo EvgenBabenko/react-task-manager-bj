@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import T from 'prop-types';
 import { getFormValues } from 'redux-form';
 
-import TaskList from '../../components/TaskList/TaskList';
-import Loading from '../../components/Loading/Loading';
+import Main from '../components/Main/Main';
+import Loading from '../components/Loading/Loading';
 import {
   getTaskList,
   addTask,
@@ -13,7 +13,7 @@ import {
   changePage,
   updateTask,
   changeSortDirection,
-} from '../../store/tasks/actions';
+} from '../store/tasks/actions';
 
 class TaskListContainer extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class TaskListContainer extends Component {
     return (
       <React.Fragment>
         {!isRequest
-          ? <TaskList {...this.props} {...this.boundActionCreators} />
+          ? <Main {...this.props} {...this.boundActionCreators} />
           : <Loading />
         }
       </React.Fragment>

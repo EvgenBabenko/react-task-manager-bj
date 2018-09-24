@@ -1,7 +1,7 @@
-import resizeImageBeforeUpload from './resizeImageBeforeUpload';
+import resizeImage from '../utils/resizeImage';
 
 export default async (image) => {
-  const url = await resizeImageBeforeUpload(image);
+  const url = await resizeImage(image);
 
   const res = await fetch(url);
 

@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 import Button from '@material-ui/core/Button';
 
-import UserMenu from '../UserMenu/UserMenu';
+import UserMenu from './UserMenu/UserMenu';
 import history from '../../../helpers/history';
 
 const AuthButton = (props) => {

@@ -1,23 +1,28 @@
-import axios from 'axios';
-
 import types from './types';
 import HTTP from '../../helpers/httpCommon';
-import actionCreaters from '../../helpers/actionCreaters';
 import store from '../store';
 import config from '../../config';
 import generateSignature from '../../services/generateSignature';
 import blobUrl from '../../services/blobUrl';
 
-export const getTaskList = (sortField, sortDir, page) => (dispatch) => {
+export const getTaskList = (sortField, sortDir, page) => async (dispatch) => {
   const { sortByField, currentPage, sortDirection } = store.getState().tasks;
 
-  dispatch(actionCreaters('GET_TASK_LIST', () => HTTP().get('/', {
-    params: {
-      sort_field: sortField || sortByField,
-      sort_direction: sortDir || sortDirection,
-      page: page || currentPage,
-    },
-  })));
+  dispatch({ type: 'GET_TASK_LIST_REQUEST' });
+
+  try {
+    const { data } = await HTTP.get('/', {
+      params: {
+        sort_field: sortField || sortByField,
+        sort_direction: sortDir || sortDirection,
+        page: page || currentPage,
+      },
+    });
+
+    dispatch({ type: 'GET_TASK_LIST_SUCCESS', data });
+  } catch (error) {
+    dispatch({ type: 'GET_TASK_LIST_FAILURE', error });
+  }
 };
 
 export const changeSortField = data => (dispatch) => {
@@ -27,13 +32,13 @@ export const changeSortField = data => (dispatch) => {
 };
 
 export const changeSortDirection = data => (dispatch) => {
-  dispatch(getTaskList(false, data));
+  dispatch(getTaskList(null, data));
 
   dispatch({ type: types.CHANGE_SORT_DIRECTION, data });
 };
 
 export const changePage = data => (dispatch) => {
-  dispatch(getTaskList(false, false, data));
+  dispatch(getTaskList(null, null, data));
 
   dispatch({ type: types.CHANGE_PAGE, data });
 };
@@ -55,17 +60,7 @@ export const updateTask = (id, payload) => async (dispatch) => {
   form.append('signature', generateSignature(gatheringFormData));
 
   try {
-    const data = await axios({
-      method: 'post',
-      url: `/edit/${id}`,
-      params: {
-        developer: config.developer,
-      },
-      data: form,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    await HTTP.post(`/edit/${id}`, form);
 
     dispatch({ type: types.UPDATE_TASK_SUCCESS });
 
@@ -82,10 +77,7 @@ export const addTask = payload => async (dispatch) => {
     username, email, text, image,
   } = payload;
 
-  console.log('image', image);
-
   const res = await blobUrl(image);
-  console.log(res);
 
   const form = new FormData();
   form.append('username', username);
@@ -94,17 +86,7 @@ export const addTask = payload => async (dispatch) => {
   form.append('image', res);
 
   try {
-    const { data } = await axios({
-      method: 'post',
-      url: '/create',
-      params: {
-        developer: config.developer,
-      },
-      data: form,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    await HTTP.post('/create', form);
 
     dispatch({ type: types.ADD_TASK_SUCCESS });
 

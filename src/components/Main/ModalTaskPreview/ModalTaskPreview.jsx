@@ -87,7 +87,6 @@ class ModalTaskPreview extends Component {
               </Button>
             </div>
           </div>
-
         </div>
       </Portal>
     );

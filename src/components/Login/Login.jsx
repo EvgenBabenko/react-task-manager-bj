@@ -72,12 +72,6 @@ AuthForm.propTypes = {
   classes: T.objectOf(T.any).isRequired,
 };
 
-// renderTextField.propTypes = {
-//   input: T.objectOf(T.any).isRequired,
-//   label: T.string.isRequired,
-//   meta: T.objectOf(T.any).isRequired,
-// };
-
 const AuthFormWrapper = reduxForm({
   form: 'auth',
   validate,

@@ -86,12 +86,6 @@ AddTaskForm.propTypes = {
   handleOpenPreviewTask: T.func.isRequired,
 };
 
-// renderTextField.propTypes = {
-//   input: T.objectOf(T.any).isRequired,
-//   label: T.string.isRequired,
-//   meta: T.objectOf(T.any).isRequired,
-// };
-
 const AddTaskFormWrapper = reduxForm({
   form: 'addTask',
   validate,

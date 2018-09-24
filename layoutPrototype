@@ -1,0 +1,16 @@
+App
+  header
+    homeButton
+    authButton
+      userMenu
+  routes
+    404
+    login
+    main
+      addTask
+      modalTaskPreview
+      sorting
+      taskList
+        task
+          editTask
+      pagination
