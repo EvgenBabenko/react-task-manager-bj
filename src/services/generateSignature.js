@@ -1,13 +1,12 @@
 import md5 from 'md5';
 
-import config from '../config';
 import serializePairs from '../utils/serializePairs';
 import alphabeticSort from '../utils/alphabeticSort';
 
-export default (gatheringFormData) => {
+export default (gatheringFormData, ...args) => {
   const sortedFormData = alphabeticSort(gatheringFormData);
 
-  const paramsString = serializePairs(sortedFormData, { key: 'token', value: config.token });
+  const paramsString = serializePairs(sortedFormData, ...args);
 
   return md5(paramsString);
 };

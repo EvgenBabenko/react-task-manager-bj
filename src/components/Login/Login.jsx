@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Notification from '../Notification/Notification';
 
 import validate from './validate';
 
@@ -49,6 +50,8 @@ const AuthForm = (props) => {
 
   return (
     <React.Fragment>
+      <Notification {...props} />
+
       <div className={classes.root}>
         <h2>Login</h2>
         <MuiThemeProvider muiTheme={getMuiTheme()}>

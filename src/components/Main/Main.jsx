@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { reset } from 'redux-form';
 import T from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Pagination from 'rc-pagination';
 import localeInfo from 'rc-pagination/lib/locale/en_US';
 import 'rc-pagination/assets/index.css';
@@ -11,6 +16,7 @@ import Sorting from './Sorting/Sorting';
 import TaskList from './TaskList/TaskList';
 import ModalTaskPreview from './ModalTaskPreview/ModalTaskPreview';
 import NoItems from '../NoItems/NoItems';
+import Notification from '../Notification/Notification';
 
 const styles = {
   root: {
@@ -84,13 +90,22 @@ class Main extends Component {
 
     return (
       <React.Fragment>
-        <AddTaskForm
-          onSubmit={this.handleSubmitForm}
-          handleOpenPreviewTask={this.handleOpenPreviewTask}
-          handleClosePreviewTask={this.handleClosePreviewTask}
-          handleAddTask={this.handleAddTask}
-          {...othersProps}
-        />
+        <Notification {...othersProps} />
+
+        <ExpansionPanel>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Add a task</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <AddTaskForm
+              onSubmit={this.handleSubmitForm}
+              handleOpenPreviewTask={this.handleOpenPreviewTask}
+              handleClosePreviewTask={this.handleClosePreviewTask}
+              handleAddTask={this.handleAddTask}
+              {...othersProps}
+            />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
 
         {modalTaskIsOpen
           && (
@@ -113,15 +128,14 @@ class Main extends Component {
 
               <TaskList {...{ ...othersProps, taskList }} />
 
-              <div className={classes.pagination}>
-                <Pagination
-                  onChange={this.handleChangePage}
-                  current={currentPage}
-                  total={totalTaskCount}
-                  defaultPageSize={3}
-                  locale={localeInfo}
-                />
-              </div>
+              <Pagination
+                className={classes.pagination}
+                onChange={this.handleChangePage}
+                current={currentPage}
+                total={totalTaskCount}
+                defaultPageSize={3}
+                locale={localeInfo}
+              />
             </React.Fragment>
           )
           : <NoItems />

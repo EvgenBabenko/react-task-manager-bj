@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import T from 'prop-types';
+import Icon from '@material-ui/core/Icon';
 
 import EditTaskForm from './EditTaskForm/EditTaskForm';
 
@@ -13,6 +14,18 @@ const styles = {
     backgroundColor: 'lightgreen',
     paddingTop: '10px',
     paddingBottom: '10px',
+  },
+  iconCompleted: {
+    position: 'absolute',
+    display: 'block',
+    top: '30px',
+    right: '-25px',
+    fontSize: '220px',
+    color: 'green',
+    opacity: '0.7',
+  },
+  root: {
+    position: 'relative',
   },
 };
 
@@ -55,21 +68,18 @@ class Task extends Component {
       <React.Fragment>
         {!isEditTask
           ? (
-            <div className={status === 10 ? 'taskDone' : ''}>
-              {status === 10 && <h2 className={classes.taskCompleted}>Task completed!</h2>}
-              <p>
-                {'User name: '}
-                {username}
-              </p>
-              <p>
-                {'User email: '}
-                {email}
-              </p>
-              <p>
-                {'Task description: '}
-                {text}
-              </p>
+            <div className={classes.root}>
+              <p>{`User name: ${username}`}</p>
+              <p>{`User email: ${email}`}</p>
+              <p>{`Task description: ${text}`}</p>
               <img src={image_path} alt="" />
+              {status === 10
+                && (
+                  <Icon color="secondary" className={classes.iconCompleted}>
+                    done
+                  </Icon>
+                )}
+
 
               {isAdmin
                 && (

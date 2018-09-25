@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import Checkbox from 'material-ui/Checkbox';
 
 import validate from './validate';
 
@@ -37,6 +38,14 @@ const renderTextField = ({
   />
 );
 
+const renderCheckbox = ({ input, label }) => (
+  <Checkbox
+    label={label}
+    checked={input.value ? true : false}
+    onCheck={input.onChange}
+  />
+);
+
 const EditTaskForm = (props) => {
   const {
     handleSubmit, pristine, submitting, classes, handleCloseEditTask,
@@ -47,7 +56,9 @@ const EditTaskForm = (props) => {
       <form onSubmit={handleSubmit} className={classes.root}>
         <Card className={classes.card}>
           <Field name="text" component={renderTextField} label="Task description" fullWidth multiLine rows={2} />
-          <Field name="status" parse={value => Number(value)} component={renderTextField} label="Task status" fullWidth />
+          <div>
+            <Field name="status" component={renderCheckbox} label="Task completed" />
+          </div>
           <div className={classes.button}>
             <Button color="primary" type="submit" disabled={pristine || submitting} autoFocus>
               Edit the task

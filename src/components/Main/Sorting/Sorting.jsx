@@ -12,6 +12,8 @@ const styles = {
     alignSelf: 'center',
     display: 'flex',
     alignItems: 'baseline',
+    marginTop: '10px',
+    marginBottom: '10px',
   },
 };
 

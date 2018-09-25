@@ -14,6 +14,7 @@ import {
   updateTask,
   changeSortDirection,
 } from '../store/tasks/actions';
+import { clearNotifyMessage } from '../store/common/actions';
 
 class TaskListContainer extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class TaskListContainer extends Component {
     const { dispatch } = props;
 
     this.boundActionCreators = bindActionCreators({
-      addTask, changeSortField, changeSortDirection, changePage, updateTask,
+      addTask, changeSortField, changeSortDirection, changePage, updateTask, clearNotifyMessage,
     }, dispatch);
   }
 
@@ -54,6 +55,7 @@ const mapStateToProps = state => ({
   currentPage: state.tasks.currentPage,
   totalTaskCount: state.tasks.totalTaskCount,
   isAdmin: state.users.isAdmin,
+  notifyMessage: state.common.notifyMessage,
   formStates: getFormValues('addTask')(state),
 });
 

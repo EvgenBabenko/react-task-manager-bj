@@ -16,8 +16,8 @@ const actions = {
   [types.GET_TASK_LIST_SUCCESS]: (state, action) => ({
     ...state,
     isRequest: false,
-    taskList: action.data.message.tasks,
-    totalTaskCount: Number(action.data.message.total_task_count),
+    taskList: action.data.tasks,
+    totalTaskCount: Number(action.data.total_task_count),
   }),
   [types.GET_TASK_LIST_FAILURE]: (state, action) => ({
     ...state,
